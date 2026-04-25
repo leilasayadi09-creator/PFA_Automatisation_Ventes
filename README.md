@@ -4,6 +4,7 @@
 Ce projet Python permet d'automatiser l'analyse des ventes d'une entreprise de e-commerce à partir d'un fichier CSV.
 
 ## Fonctionnalités
+- Generer le fichier ventes.csv
 - Lecture du fichier ventes.csv
 - Calcul du chiffre d'affaires brut
 - Application des remises
