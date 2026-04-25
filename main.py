@@ -3,6 +3,20 @@ import matplotlib.pyplot as plt
 
 TAUX_TVA = 0.20
 
+def generer_ventes(nom_fichier):
+    donnees = [
+        ["ID", "Prix", "Quantite", "Remise"],
+        [101, 15.0, 3, 10],
+        [102, 25.0, 2, 5],
+        [103, 10.0, 5, 0],
+        [104, 40.0, 1, 15],
+        [105, 8.0, 10, 0]
+    ]
+
+    with open(nom_fichier, mode="w", newline="", encoding="utf-8") as fichier:
+        writer = csv.writer(fichier)
+        writer.writerows(donnees)
+
 
 def lire_ventes(nom_fichier):
     ventes = []
