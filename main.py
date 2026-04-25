@@ -123,7 +123,9 @@ def tracer_graphique(ventes):
 def main():
     fichier_entree = "ventes.csv"
     fichier_sortie = "resultats_final.csv"
+ 
 
+    generer_ventes(fichier_entree)
     ventes = lire_ventes(fichier_entree)
     ca_total, produit_max = calculer_donnees(ventes)
     afficher_resultats(ventes, ca_total, produit_max)
