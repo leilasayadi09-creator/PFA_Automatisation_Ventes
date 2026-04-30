@@ -1,22 +1,19 @@
 import csv
+import random
 import matplotlib.pyplot as plt
 
 TAUX_TVA = 0.20
 
-def generer_ventes(nom_fichier):
-    donnees = [
-        ["ID", "Prix", "Quantite", "Remise"],
-        [101, 15.0, 3, 10],
-        [102, 25.0, 2, 5],
-        [103, 10.0, 5, 0],
-        [104, 40.0, 1, 15],
-        [105, 8.0, 10, 0]
-    ]
-
+def generer_ventes(nom_fichier,nb_lignes):
+   
     with open(nom_fichier, mode="w", newline="", encoding="utf-8") as fichier:
         writer = csv.writer(fichier)
-        writer.writerows(donnees)
-
+        writer.writerow(["ID","Prix","Quantite","Remise"])
+        for i in range(101, 101 + nb_lignes):
+            prix     = round(random.uniform(5.0, 100.0), 2)
+            quantite = random.randint(1, 20)
+            remise   = random.choice([0, 5, 10, 15, 20])
+            writer.writerow([i, prix, quantite, remise])
 
 def lire_ventes(nom_fichier):
     ventes = []
@@ -92,9 +89,9 @@ def afficher_resultats(ventes, ca_total, produit_max):
 
 
 def tracer_graphique(ventes):
-    ids = [vente["ID"] for vente in ventes]
-    ca_nets = [vente["CA_Net"] for vente in ventes]
-
+    top10=sorted(ventes,key=lambda v:v["CA_Net"],reverse=True)[:10]
+    ids= [vente["ID"]for vente in top10]
+    ca_nets = [vente["CA_Net"] for vente in top10]
     plt.figure(figsize=(10, 6))
 
     max_val = max(ca_nets)
@@ -102,7 +99,7 @@ def tracer_graphique(ventes):
 
     barres = plt.bar(ids, ca_nets, color=couleurs)
 
-    plt.title("Chiffre d'Affaires Net par Produit", fontsize=14)
+    plt.title("Top 10 CA Net par Produit",fontsize=14)
     plt.xlabel("ID Produit", fontsize=12)
     plt.ylabel("CA Net (€)", fontsize=12)
 
@@ -123,9 +120,10 @@ def tracer_graphique(ventes):
 def main():
     fichier_entree = "ventes.csv"
     fichier_sortie = "resultats_final.csv"
+    nb_lignes = int(input("Combien de lignes ? : "))
  
 
-    generer_ventes(fichier_entree)
+    generer_ventes(fichier_entree,nb_lignes)
     ventes = lire_ventes(fichier_entree)
     ca_total, produit_max = calculer_donnees(ventes)
     afficher_resultats(ventes, ca_total, produit_max)
